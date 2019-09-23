@@ -4,6 +4,30 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.ajoberstar.grgit:grgit-gradle:3.1.1"
+    }
+}
+
+import org.ajoberstar.grgit.Grgit
+
+ext {
+    git = Grgit.open(currentDir: projectDir)
+    gitVersionName = git.describe()
+    gitVersionCode = git.tag.list().size()
+    gitVersionCodeTime = git.head().time
+}
+
+task printVersion() {
+    println("Version Name: $gitVersionName")
+    println("Version Code: $gitVersionCode")
+    println("Version Code Time: $gitVersionCodeTime")
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
@@ -11,8 +35,8 @@ android {
         applicationId "com.example.lab1"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode getVersionCode()
+        versionName getVersionName()
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
