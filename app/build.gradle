@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 buildscript {
     repositories {
         jcenter()
@@ -19,18 +21,18 @@ ext {
     git = Grgit.open(currentDir: projectDir)
     gitVersionName = git.describe()
     gitVersionCode = git.tag.list().size()
-    gitVersionCodeTime = git.head().time
 }
 
-task printVersion() {
+/*task printVersion() {
     println("Version Name: $gitVersionName")
     println("Version Code: $gitVersionCode")
     println("Version Code Time: $gitVersionCodeTime")
-}
+}*/
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.example.lab1"
         minSdkVersion 23
@@ -45,6 +47,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding.enabled = true
 }
 
 dependencies {
@@ -56,4 +59,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    kapt 'androidx.databinding:databinding-compiler-common:3.4.2'
 }
