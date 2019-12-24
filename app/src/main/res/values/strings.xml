@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">lab1</string>
-    <string name="button">Button</string>
-    <string name="you_should_give_permission_to_get_info_give_permission_in_settings">You should give permission to get
-        info (give permission in settings)!
-    </string>
-</resources>
